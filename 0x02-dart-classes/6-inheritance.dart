@@ -1,21 +1,19 @@
 import '6-password.dart';
 
 class User extends Password {
+  String? name;
+  int? age;
+  double? height;
   int? id;
-  String name;
-  int age;
-  double height;
-  String? user_password;
+  String user_password = '';
 
-  User(
-      {int? this.id,
-      required this.name,
-      required this.age,
-      required this.height,
-      String? this.user_password});
-
-  Map toJson() {
-    return {"id": id, "name": name, "age": age, "height": height};
+  User({id: int, name: String, age: int, height: double, user_password: String})
+      : super(password: user_password) {
+    this.id = id;
+    this.name = name;
+    this.age = age;
+    this.height = height;
+    this.user_password = user_password;
   }
 
   static User fromJson(Map<dynamic, dynamic> userJson) {
@@ -23,16 +21,23 @@ class User extends Password {
         id: userJson['id'],
         name: userJson['name'],
         age: userJson['age'],
-        height: userJson['height']);
+        height: userJson['height'],
+        user_password: '');
   }
 
-  String showName() {
-    return "Hello $name";
+  Map toJson() {
+    return {
+      'id': this.id,
+      'name': this.name,
+      'age': this.age,
+      'height': this.height
+    };
   }
 
+  @override
   String toString() {
-    final pass = Password(password: user_password);
+    final pass = new Password(password: this.user_password);
 
-    return "User(id : $id ,name: $name, age: $age, height: $height, Password: ${pass.isValid()}})";
+    return 'User(id : ${this.id} ,name: ${this.name}, age: ${this.age}, height: ${this.height}, Password: ${pass.isValid()})';
   }
 }
